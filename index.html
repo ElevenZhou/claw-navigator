@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Claw 导航 — AI Agent 对比与导航</title>
+    <meta
+      name="description"
+      content="全面比较各类 AI 编程 Agent（GitHub Copilot、Cursor、Windsurf、Claude 等），帮助开发者找到最适合的 AI 助手。"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- ====== HEADER ====== -->
+    <header>
+      <div class="header-inner">
+        <div class="logo">
+          <div class="logo-icon">🦀</div>
+          <div>
+            Claw 导航
+            <div class="logo-sub">AI Agent 对比与导航</div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <a
+            href="https://github.com/ElevenZhou/claw-navigator"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-outline"
+          >
+            ⭐ GitHub
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ====== HERO ====== -->
+    <section class="hero">
+      <h1>AI Agent 导航与对比</h1>
+      <p>
+        汇聚主流 AI 编程助手，一站式比较功能、定价和适用场景，助你选出最适合的
+        AI 搭档。
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num" id="hero-count">—</div>
+          <div class="hero-stat-label">款 Agent</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">10+</div>
+          <div class="hero-stat-label">对比维度</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">实时</div>
+          <div class="hero-stat-label">过滤搜索</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== CONTROLS ====== -->
+    <div class="controls">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="搜索 Agent 名称、功能…"
+          autocomplete="off"
+        />
+      </div>
+      <div class="filter-tags" id="filter-tags"></div>
+      <div class="view-toggle">
+        <button class="view-btn active" id="view-btn-grid">卡片</button>
+        <button class="view-btn" id="view-btn-compare">对比表</button>
+      </div>
+    </div>
+
+    <!-- ====== MAIN ====== -->
+    <main>
+      <!-- Grid view -->
+      <div id="grid-view">
+        <div class="agents-grid" id="agents-container"></div>
+      </div>
+
+      <!-- Compare view -->
+      <div id="compare-view">
+        <div id="compare-table-container"></div>
+      </div>
+    </main>
+
+    <!-- ====== COMPARE BAR ====== -->
+    <div class="compare-bar hidden" id="compare-bar">
+      <div class="compare-items" id="compare-items"></div>
+      <span class="compare-hint" id="compare-hint"></span>
+      <button class="btn btn-outline" onclick="clearCompare()">清空</button>
+      <button class="btn btn-primary" onclick="startCompare()">
+        开始对比 →
+      </button>
+    </div>
+
+    <!-- ====== MODAL ====== -->
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="modal" id="modal-content"></div>
+    </div>
+
+    <!-- ====== FOOTER ====== -->
+    <footer>
+      <p>
+        Claw 导航 · 数据仅供参考，实际以官网为准 ·
+        <a
+          href="https://github.com/ElevenZhou/claw-navigator"
+          target="_blank"
+          rel="noopener"
+          >GitHub</a
+        >
+      </p>
+    </footer>
+
+    <script src="agents.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
