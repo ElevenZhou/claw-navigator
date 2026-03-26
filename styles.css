@@ -209,7 +209,9 @@ header {
 
 .search-box input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.35);
+  outline: 2px solid var(--primary);
+  outline-offset: 0;
 }
 
 .search-box input::placeholder {

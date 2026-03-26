@@ -1,3 +1,24 @@
+// ─── Toast ────────────────────────────────────────────────────────────────────
+function showToast(message, type = "info") {
+  const existing = document.getElementById("toast");
+  if (existing) existing.remove();
+
+  const toast = document.createElement("div");
+  toast.id = "toast";
+  toast.setAttribute("role", "status");
+  toast.setAttribute("aria-live", "polite");
+  toast.style.cssText = `
+    position:fixed;top:80px;left:50%;transform:translateX(-50%);
+    padding:10px 20px;border-radius:8px;font-size:0.9rem;z-index:9999;
+    background:${type === "error" ? "var(--red)" : "var(--primary)"};
+    color:#fff;box-shadow:0 4px 16px rgba(0,0,0,0.4);
+    animation:fadeIn 0.2s ease;pointer-events:none;white-space:nowrap;
+  `;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
 // ─── State ────────────────────────────────────────────────────────────────────
 let currentCategory = "全部";
 let searchQuery = "";
@@ -151,7 +172,7 @@ function renderAgentCard(agent, idx) {
 function toggleCompare(id, add) {
   if (add) {
     if (selectedForCompare.length >= 4) {
-      alert("最多同时对比 4 个 Agent");
+      showToast("最多同时对比 4 个 Agent", "error");
       // uncheck
       const cb = agentsContainer.querySelector(`[data-id="${id}"] .compare-cb`);
       if (cb) cb.checked = false;
@@ -177,7 +198,7 @@ function updateCompareBar() {
       return `
         <span class="compare-item-tag">
           ${a.name}
-          <button onclick="removeFromCompare('${id}')" title="移除">×</button>
+          <button onclick="removeFromCompare('${id}')" title="移除" aria-label="移除 ${a.name}">×</button>
         </span>`;
     })
     .join("");
@@ -202,7 +223,7 @@ window.removeFromCompare = removeFromCompare;
 
 function startCompare() {
   if (selectedForCompare.length < 2) {
-    alert("请至少选择 2 个 Agent 进行对比");
+    showToast("请至少选择 2 个 Agent 进行对比", "error");
     return;
   }
   currentView = "compare";
@@ -436,7 +457,7 @@ function setView(view) {
     viewBtnCompare.classList.remove("active");
   } else {
     if (selectedForCompare.length < 2) {
-      alert("请先选择至少 2 个 Agent（勾选卡片上的「加入对比」）再切换到对比视图");
+      showToast("请先勾选至少 2 个 Agent 的「加入对比」再切换到对比视图", "error");
       return;
     }
     gridView.style.display = "none";
@@ -462,7 +483,7 @@ function setupEvents() {
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeModal();
+    if (e.key === "Escape" && modalOverlay.classList.contains("open")) closeModal();
   });
 }
 
