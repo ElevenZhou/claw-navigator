@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 - 页面未找到" description="你访问的页面不存在">
+  <div class="flex items-center justify-center min-h-[60vh] px-4">
+    <div class="text-center animate-fade-in">
+      <div class="text-8xl mb-6">🦞</div>
+      <h1 class="text-4xl sm:text-5xl font-bold text-[#E8E8ED] mb-4">404</h1>
+      <p class="text-lg text-[#9898A6] mb-2">这只龙虾迷路了</p>
+      <p class="text-sm text-[#5A5A6E] mb-8">你访问的页面不存在或已被移除</p>
+      <div class="flex items-center justify-center gap-4">
+        <a
+          href="/"
+          class="px-6 py-2.5 rounded-xl bg-[#FF6B35] text-white text-sm font-medium hover:bg-[#FF6B35]/90 transition-colors"
+        >
+          🏠 返回首页
+        </a>
+        <a
+          href="/ecosystem"
+          class="px-6 py-2.5 rounded-xl border border-[#2A2A3A] text-[#9898A6] text-sm font-medium hover:border-[#3A3A4A] hover:text-[#E8E8ED] transition-colors"
+        >
+          🗺️ 生态全景图
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

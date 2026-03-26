@@ -1,0 +1,16 @@
+{
+  "name": "Claw Navigator",
+  "short_name": "ClawNav",
+  "description": "🦞 Claw/龙虾 AI Agent 生态导航 — 一站式发现、对比、选择最适合你的智能体",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0F",
+  "theme_color": "#0A0A0F",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

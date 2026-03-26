@@ -20,3 +20,10 @@ Thumbs.db
 # logs
 *.log
 npm-debug.log*
+
+# Astro cache
+.astro/
+
+# temp files
+*.zip
+gh-temp/
