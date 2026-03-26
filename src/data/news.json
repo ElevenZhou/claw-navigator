@@ -1,0 +1,162 @@
+[
+  {
+    "date": "2026-03-25",
+    "type": "release",
+    "product": "小艺Claw",
+    "title": "华为何刚官宣小艺Claw Beta版",
+    "summary": "华为终端BG CEO何刚在鸿蒙生态大会上正式发布小艺Claw，作为HarmonyOS NEXT系统级智能体，支持跨应用任务链执行和端侧大模型推理。首批适配Mate 70系列和MatePad Pro。",
+    "source": "https://consumer.huawei.com/cn/press/2026/xiaoyi-claw/"
+  },
+  {
+    "date": "2026-03-24",
+    "type": "release",
+    "product": "AutoClaw",
+    "title": "智谱AI发布AutoClaw（澳龙）零门槛本地版",
+    "summary": "智谱AI推出AutoClaw，搭载GLM系列大模型的本地运行智能体。主打「数据不出本机」的隐私体验，免费版提供基础对话和文件处理，付费版解锁高级Agent编排。",
+    "source": "https://zhipuai.cn/news/autoclaw"
+  },
+  {
+    "date": "2026-03-22",
+    "type": "release",
+    "product": "miclaw",
+    "title": "小米正式发布miclaw手机端智能体",
+    "summary": "小米在春季新品发布会上推出miclaw，作为小米手机系统预装的Claw智能体，支持自然语言控制米家智能家居、文件管理和与小米汽车车机联动。",
+    "source": "https://mi.com/news/miclaw"
+  },
+  {
+    "date": "2026-03-20",
+    "type": "release",
+    "product": "RedClaw",
+    "title": "百度发布RedClaw，号称全球首款手机端龙虾",
+    "summary": "百度智能云推出RedClaw手机端智能体，语音优先交互设计，支持iOS和Android双平台。同时发布DuClaw网页版和DuMate桌面办公版，构成百度Claw全家桶。",
+    "source": "https://baidu.com/news/claw-family"
+  },
+  {
+    "date": "2026-03-20",
+    "type": "release",
+    "product": "DuClaw",
+    "title": "百度DuClaw零部署网页版同步上线",
+    "summary": "与RedClaw同步发布，DuClaw定位零部署网页版Claw，浏览器打开即用，集成百度搜索知识增强，免费提供智能对话、文档分析和代码生成能力。",
+    "source": "https://baidu.com/news/duclaw"
+  },
+  {
+    "date": "2026-03-20",
+    "type": "release",
+    "product": "DuMate",
+    "title": "百度DuMate桌面办公版Claw发布",
+    "summary": "百度Claw全家桶第三款产品DuMate上线，专注桌面办公场景，支持Office文档智能编辑、邮件自动撰写和会议纪要生成。",
+    "source": "https://baidu.com/news/dumate"
+  },
+  {
+    "date": "2026-03-15",
+    "type": "update",
+    "product": "小布Claw",
+    "title": "OPPO小布Claw开启Beta公测",
+    "summary": "OPPO小布Claw正式开启Beta公测，首批支持Find X8系列机型，主打智能相册管理和跨应用任务执行，ColorOS 15及以上系统可升级体验。",
+    "source": "https://community.coloros.com/topic/xiaobu-claw-beta"
+  },
+  {
+    "date": "2026-02-28",
+    "type": "release",
+    "product": "StepClaw",
+    "title": "阶跃AI发布StepClaw云端部署版",
+    "summary": "阶跃AI推出StepClaw，搭载自研Step系列多模态模型，支持文字/图片/视频理解。提供云端部署和私有化定制方案，含可视化Agent工作流编排。",
+    "source": "https://stepfun.com/news/stepclaw"
+  },
+  {
+    "date": "2026-02-18",
+    "type": "release",
+    "product": "EasyClaw",
+    "title": "猎豹移动发布EasyClaw标准化AI员工",
+    "summary": "猎豹移动推出EasyClaw，将Claw Agent封装为标准化岗位角色（客服/销售/运营等），预置多种业务模板，支持微信、钉钉、飞书多渠道接入。",
+    "source": "https://cmcm.com/news/easyclaw"
+  },
+  {
+    "date": "2026-02-10",
+    "type": "release",
+    "product": "Linclaw",
+    "title": "七牛云Linclaw桌面版上线，赠送300万Token",
+    "summary": "七牛云推出Linclaw桌面版智能体，主打零部署和多媒体智能处理能力。新用户注册即赠300万Token免费额度，支持多模型自由切换。",
+    "source": "https://qiniu.com/news/linclaw"
+  },
+  {
+    "date": "2026-02-05",
+    "type": "release",
+    "product": "WindClaw",
+    "title": "万得WindClaw投研专业版发布",
+    "summary": "万得推出WindClaw投研专业版Claw智能体，深度连接Wind金融终端数据库，支持自然语言查询行情数据和自动生成投研报告。",
+    "source": "https://wind.com.cn/news/windclaw"
+  },
+  {
+    "date": "2026-01-20",
+    "type": "release",
+    "product": "ArkClaw",
+    "title": "字节跳动发布ArkClaw飞书版，Token不限量",
+    "summary": "字节跳动推出ArkClaw，作为飞书原生版Claw智能体，深度集成飞书文档/表格/日历。最大亮点：Token不限量使用，搭载豆包大模型。",
+    "source": "https://feishu.cn/news/arkclaw"
+  },
+  {
+    "date": "2026-01-08",
+    "type": "release",
+    "product": "MaxClaw",
+    "title": "MiniMax发布MaxClaw，39元/月SaaS智能体",
+    "summary": "MiniMax推出MaxClaw云端SaaS智能体，定价39元/月，提供可视化工作流编排、多角色Agent协作和知识库RAG功能，面向中小企业和非技术用户。",
+    "source": "https://minimax.com/news/maxclaw"
+  },
+  {
+    "date": "2025-12-15",
+    "type": "release",
+    "product": "Kimi Claw",
+    "title": "月之暗面Kimi Claw上线，199元/月专业版",
+    "summary": "月之暗面推出Kimi Claw，搭载K2.5大模型，200万Token超长上下文，40GB云存储。定价199元/月，面向研究人员和专业分析师。",
+    "source": "https://moonshot.cn/news/kimi-claw"
+  },
+  {
+    "date": "2025-12-01",
+    "type": "release",
+    "product": "JVS Claw",
+    "title": "阿里云JVS Claw安全沙箱版上线",
+    "summary": "阿里云推出JVS Claw安全沙箱版，面向金融/政务/医疗等行业，提供代码执行隔离、权限管控和操作审计等企业级安全能力。",
+    "source": "https://aliyun.com/news/jvs-claw"
+  },
+  {
+    "date": "2025-11-20",
+    "type": "release",
+    "product": "CoPaw",
+    "title": "阿里巴巴CoPaw开源发布",
+    "summary": "阿里巴巴正式在GitHub开源CoPaw智能体框架，支持本地部署和云端运行，深度集成通义千问模型，内置企业级权限管理和多租户方案。",
+    "source": "https://github.com/alibaba/copaw"
+  },
+  {
+    "date": "2025-10-15",
+    "type": "release",
+    "product": "QClaw",
+    "title": "腾讯QClaw Beta公测启动",
+    "summary": "腾讯QClaw微信原生AI助手开启Beta公测，用户可在微信中直接与Claw智能体对话，支持消息回复、文件处理和多模态理解。",
+    "source": "https://qq.com/news/qclaw-beta"
+  },
+  {
+    "date": "2025-09-10",
+    "type": "release",
+    "product": "WorkBuddy",
+    "title": "腾讯云WorkBuddy正式发布",
+    "summary": "腾讯云正式发布WorkBuddy企业级桌面智能体，主打免部署开箱即用，深度集成微信生态，支持代码编辑、文档生成和自动化任务编排。",
+    "source": "https://workbuddy.cn/news/launch"
+  },
+  {
+    "date": "2025-08-20",
+    "type": "other",
+    "product": "OpenClaw",
+    "title": "OpenClaw GitHub Star突破300K",
+    "summary": "全球最大开源AI Agent框架OpenClaw在GitHub上的Star数正式突破30万大关，持续稳居AI Agent领域最受欢迎的开源项目。",
+    "source": "https://github.com/openclaw/openclaw"
+  },
+  {
+    "date": "2025-08-01",
+    "type": "release",
+    "product": "Molili",
+    "title": "Molili国内首发，多入口协同Claw",
+    "summary": "国内极客社区独立开发的Molili正式发布，作为国内首发Claw产品之一，支持桌面/Web/CLI多入口统一访问和对话历史跨设备同步。",
+    "source": "https://molili.dev/news/launch"
+  }
+]

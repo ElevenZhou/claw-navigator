@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import DifficultyStars from '../components/DifficultyStars.astro';
+import productsData from '../data/products.json';
+import { VENDOR_COLORS } from '../data/constants';
+import type { Product, VendorGroup } from '../types/product';
+
+// Group products by vendorGroup
+const vendorMap = new Map<string, Product[]>();
+for (const p of productsData) {
+  const list = vendorMap.get(p.vendorGroup) || [];
+  list.push(p);
+  vendorMap.set(p.vendorGroup, list);
+}
+
+// Sort: larger groups first
+const vendorGroups = Array.from(vendorMap.entries()).sort((a, b) => b[1].length - a[1].length);
+
+// Stats
+const totalProducts = productsData.length;
+const totalVendors = vendorMap.size;
+const openSourceCount = productsData.filter(p => p.openSource).length;
+const freeCount = productsData.filter(p => ['free', 'open-source'].includes(p.priceCategory)).length;
+---
+
+<BaseLayout title="生态全景图" description="Claw/龙虾 AI Agent 生态全景图 — 查看 10+ 厂商阵营的产品布局">
+  <div class="pt-24 pb-16 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto">
+
+      <Breadcrumb items={[
+        { label: '首页', href: '/' },
+        { label: '生态全景图' }
+      ]} />
+
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-3xl sm:text-4xl font-bold text-[#E8E8ED] mb-3">🗺️ 生态全景图</h1>
+        <p class="text-[#9898A6] max-w-2xl mx-auto">
+          Claw/龙虾 AI Agent 生态全景 — 一览各大厂商的产品布局与差异化定位
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12">
+        {[
+          { label: '收录产品', value: totalProducts, icon: '🦞', color: '#FF6B35' },
+          { label: '厂商阵营', value: totalVendors, icon: '🏢', color: '#4ECDC4' },
+          { label: '开源项目', value: openSourceCount, icon: '🔓', color: '#6C5CE7' },
+          { label: '免费产品', value: freeCount, icon: '🎁', color: '#00B894' },
+        ].map(s => (
+          <div class="bg-[#16161F] rounded-xl border border-[#2A2A3A] p-5 text-center">
+            <span class="text-2xl block mb-2">{s.icon}</span>
+            <div class="text-2xl font-bold mb-1" style={`color: ${s.color}`}>{s.value}</div>
+            <div class="text-xs text-[#5A5A6E]">{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Vendor Groups -->
+      {vendorGroups.map(([vendor, products]) => {
+        const color = VENDOR_COLORS[vendor] || '#B2BEC3';
+        const productCount = products.length;
+        return (
+          <div class="mb-10 animate-fade-in">
+            <!-- Group Header -->
+            <div class="flex items-center gap-3 mb-4">
+              <div class="h-1 flex-1 rounded-full" style={`background: ${color}40`}></div>
+              <div class="flex items-center gap-2 px-4 py-1.5 rounded-full" style={`background: ${color}15; border: 1px solid ${color}40`}>
+                <span class="w-3 h-3 rounded-full" style={`background: ${color}`}></span>
+                <span class="text-sm font-bold" style={`color: ${color}`}>{vendor}</span>
+                <span class="text-xs text-[#5A5A6E]">{productCount} 款产品</span>
+              </div>
+              <div class="h-1 flex-1 rounded-full" style={`background: ${color}40`}></div>
+            </div>
+
+            <!-- Product Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {products.map(product => (
+                <a
+                  href={`/product/${product.id}`}
+                  class="bg-[#16161F] rounded-xl border border-[#2A2A3A] p-5 transition-all duration-300 hover:bg-[#1E1E2A] hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20 group"
+                >
+                  <div class="h-1 w-full rounded-full mb-3" style={`background: ${color}`}></div>
+                  <div class="flex items-start gap-3 mb-3">
+                    <span class="text-2xl flex-shrink-0">{product.logoUrl}</span>
+                    <div class="min-w-0">
+                      <div class="flex items-center gap-2">
+                        <h3 class="text-base font-bold text-[#E8E8ED] group-hover:text-[#FF6B35] transition-colors truncate">{product.name}</h3>
+                        {product.status === 'beta' && (
+                          <span class="text-xs px-2 py-0.5 rounded-full bg-yellow-500/15 text-yellow-400 font-medium flex-shrink-0">Beta</span>
+                        )}
+                      </div>
+                      <p class="text-sm text-[#9898A6] truncate">{product.slogan}</p>
+                    </div>
+                  </div>
+
+                  <!-- Key Info -->
+                  <div class="grid grid-cols-2 gap-2 text-xs text-[#5A5A6E] mb-3">
+                    <div class="flex items-center gap-1.5">
+                      <span>💻</span>
+                      <span class="truncate">{product.platformLabel}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <span>💰</span>
+                      <span class:list={[
+                        'font-medium',
+                        ['free', 'open-source'].includes(product.priceCategory) ? 'text-[#4ECDC4]' : 'text-[#FF6B35]'
+                      ]}>
+                        {product.price}
+                      </span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <span>📦</span>
+                      <span class="truncate">{product.deployType}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <span>🧠</span>
+                      <span class="truncate">{product.aiModel}</span>
+                    </div>
+                  </div>
+
+                  {/* Difficulty */}
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs text-[#5A5A6E]">难度</span>
+                    <DifficultyStars difficulty={product.difficulty} />
+                    {product.openSource && (
+                      <span class="ml-auto text-xs px-2 py-0.5 rounded-full bg-[#4ECDC4]/15 text-[#4ECDC4]">开源</span>
+                    )}
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+
+    </div>
+  </div>
+</BaseLayout>

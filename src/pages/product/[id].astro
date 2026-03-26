@@ -1,0 +1,303 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import DifficultyStars from '../../components/DifficultyStars.astro';
+import productsData from '../../data/products.json';
+import { VENDOR_COLORS, TAG_LABELS, DEPLOY_TYPE_LABELS, STATUS_LABELS } from '../../data/constants';
+import type { Product } from '../../types/product';
+
+export function getStaticPaths() {
+  return productsData.map((product: Product) => ({
+    params: { id: product.id },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+const vendorColor = VENDOR_COLORS[product.vendorGroup] || '#B2BEC3';
+
+// Related products: same vendorGroup, excluding current
+const related = productsData
+  .filter((p: Product) => p.vendorGroup === product.vendorGroup && p.id !== product.id)
+  .slice(0, 3);
+
+// If no same-vendor products, pick from similar tags
+const fallbackRelated = related.length > 0
+  ? related
+  : productsData
+      .filter((p: Product) => p.id !== product.id && p.tagCategories.some(t => product.tagCategories.includes(t)))
+      .slice(0, 3);
+
+const statusLabel = STATUS_LABELS[product.status] || product.status;
+
+const privacyLabel: Record<string, string> = {
+  local: '本地存储',
+  cloud: '云端存储',
+  hybrid: '混合存储',
+};
+---
+
+<BaseLayout title={product.name} description={product.slogan + ' - ' + product.description.slice(0, 120) + '...'}>
+  <div class="pt-24 pb-16 px-4 sm:px-6">
+    <div class="max-w-5xl mx-auto">
+
+      <!-- Breadcrumb -->
+      <Breadcrumb items={[
+        { label: '首页', href: '/' },
+        { label: product.name }
+      ]} />
+
+      <!-- Product Header -->
+      <div class="bg-[#16161F] rounded-2xl border border-[#2A2A3A] p-6 sm:p-8 mb-8 animate-fade-in">
+        <div class="flex flex-col sm:flex-row items-start gap-5">
+          <!-- Logo & Name -->
+          <div class="flex items-start gap-4 flex-1 min-w-0">
+            <div
+              class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center text-3xl sm:text-4xl flex-shrink-0"
+              style={`background: ${vendorColor}15; border: 2px solid ${vendorColor}40`}
+            >
+              {product.logoUrl}
+            </div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-3 mb-1 flex-wrap">
+                <h1 class="text-2xl sm:text-3xl font-bold text-[#E8E8ED]">{product.name}</h1>
+                {product.status === 'beta' && (
+                  <span class="px-2.5 py-0.5 rounded-full bg-yellow-500/15 text-yellow-400 text-xs font-medium">{statusLabel}</span>
+                )}
+                {product.openSource && (
+                  <span class="px-2.5 py-0.5 rounded-full bg-[#4ECDC4]/15 text-[#4ECDC4] text-xs font-medium">开源</span>
+                )}
+              </div>
+              <p class="text-lg text-[#9898A6] mb-2">{product.slogan}</p>
+              <div class="flex items-center gap-2 text-sm text-[#5A5A6E]">
+                <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style={`background: ${vendorColor}`}></span>
+                <span>{product.vendor}</span>
+                <span class="mx-1">·</span>
+                <span>{product.platformLabel}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex items-center gap-3 flex-shrink-0 w-full sm:w-auto">
+            <a
+              href={product.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-[#FF6B35] text-white text-sm font-medium hover:bg-[#FF6B35]/90 transition-colors text-center"
+            >
+              访问官网
+            </a>
+            {product.github && (
+              <a
+                href={product.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex-1 sm:flex-none px-5 py-2.5 rounded-xl border border-[#2A2A3A] text-[#9898A6] text-sm font-medium hover:border-[#3A3A4A] hover:text-[#E8E8ED] transition-colors text-center"
+              >
+                GitHub
+              </a>
+            )}
+          </div>
+        </div>
+
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-2 mt-5 pt-5 border-t border-[#2A2A3A]">
+          {product.tagCategories.map(tag => (
+            <span
+              class:list={[
+                'px-3 py-1 rounded-full text-xs font-medium',
+                ['free', 'open-source'].includes(tag)
+                  ? 'bg-[#FF6B35]/15 text-[#FF6B35]'
+                  : 'bg-[#2A2A3A]/60 text-[#9898A6]'
+              ]}
+            >
+              {TAG_LABELS[tag] || tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- Info Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8 animate-slide-up">
+        {[
+          { label: '平台', value: product.platformLabel, icon: '🖥️' },
+          { label: '部署方式', value: product.deployType, icon: '📦' },
+          { label: '价格', value: product.price, icon: '💰' },
+          { label: '难度', value: '', icon: '⚡', isDifficulty: true },
+          { label: 'AI模型', value: product.aiModel, icon: '🧠' },
+          { label: '隐私模式', value: privacyLabel[product.privacy] || product.privacy, icon: '🔒' },
+          { label: '消息平台', value: product.messagePlatformCount > 0 ? product.messagePlatforms : '无独立消息平台', icon: '💬' },
+          { label: 'Skills生态', value: product.skills, icon: '🧩' },
+        ].map(item => (
+          <div class="bg-[#16161F] rounded-xl border border-[#2A2A3A] p-4">
+            <div class="text-xs text-[#5A5A6E] mb-1.5 flex items-center gap-1.5">
+              <span>{item.icon}</span>
+              <span>{item.label}</span>
+            </div>
+            {item.isDifficulty ? (
+              <DifficultyStars difficulty={product.difficulty} />
+            ) : (
+              <div class="text-sm text-[#E8E8ED] leading-relaxed line-clamp-2" title={item.value}>
+                {item.value}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <!-- Main Content -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Left: Description + Features -->
+        <div class="lg:col-span-2 space-y-8">
+          <!-- Description -->
+          <div class="bg-[#16161F] rounded-2xl border border-[#2A2A3A] p-6 sm:p-8">
+            <h2 class="text-xl font-bold text-[#E8E8ED] mb-4 flex items-center gap-2">
+              <span class="w-1 h-5 rounded-full" style={`background: ${vendorColor}`}></span>
+              产品介绍
+            </h2>
+            <p class="text-[#9898A6] leading-relaxed text-[15px]">{product.description}</p>
+          </div>
+
+          <!-- Features -->
+          <div class="bg-[#16161F] rounded-2xl border border-[#2A2A3A] p-6 sm:p-8">
+            <h2 class="text-xl font-bold text-[#E8E8ED] mb-4 flex items-center gap-2">
+              <span class="w-1 h-5 rounded-full" style={`background: ${vendorColor}`}></span>
+              核心功能
+            </h2>
+            <ul class="space-y-3">
+              {product.features.map((feature, i) => (
+                <li class="flex items-start gap-3">
+                  <span class="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5" style={`background: ${vendorColor}20; color: ${vendorColor}`}>
+                    {i + 1}
+                  </span>
+                  <span class="text-[#9898A6] text-[15px]">{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right Sidebar: Pros/Cons/Audience -->
+        <div class="space-y-6">
+
+          <!-- Pros -->
+          <div class="bg-[#16161F] rounded-2xl border border-[#2A2A3A] p-6">
+            <h3 class="text-lg font-bold text-[#E8E8ED] mb-4 flex items-center gap-2">
+              <span class="text-[#4ECDC4]">✓</span> 优势
+            </h3>
+            <ul class="space-y-2.5">
+              {product.pros.map(pro => (
+                <li class="flex items-start gap-2 text-sm text-[#9898A6]">
+                  <span class="text-[#4ECDC4] mt-0.5 flex-shrink-0">+</span>
+                  <span>{pro}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Cons -->
+          <div class="bg-[#16161F] rounded-2xl border border-[#2A2A3A] p-6">
+            <h3 class="text-lg font-bold text-[#E8E8ED] mb-4 flex items-center gap-2">
+              <span class="text-red-400">✗</span> 不足
+            </h3>
+            <ul class="space-y-2.5">
+              {product.cons.map(con => (
+                <li class="flex items-start gap-2 text-sm text-[#9898A6]">
+                  <span class="text-red-400 mt-0.5 flex-shrink-0">-</span>
+                  <span>{con}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Audience -->
+          <div class="bg-[#16161F] rounded-2xl border border-[#2A2A3A] p-6">
+            <h3 class="text-lg font-bold text-[#E8E8ED] mb-4 flex items-center gap-2">
+              <span class="text-[#FF6B35]">🎯</span> 适合人群
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              {product.audience.map(a => (
+                <span class="px-3 py-1.5 rounded-lg bg-[#FF6B35]/10 text-[#FF6B35] text-sm font-medium">
+                  {a}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Meta Info -->
+          <div class="bg-[#16161F] rounded-2xl border border-[#2A2A3A] p-6 text-xs text-[#5A5A6E] space-y-2">
+            <p>发布日期：{product.releaseDate}</p>
+            <p>最后更新：{product.updatedAt}</p>
+            {product.github && <p>开源地址：<a href={product.github} target="_blank" rel="noopener noreferrer" class="text-[#4ECDC4] hover:underline">{product.github}</a></p>}
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Products -->
+      {fallbackRelated.length > 0 && (
+        <div class="mt-12">
+          <h2 class="text-xl font-bold text-[#E8E8ED] mb-6">相关产品</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {fallbackRelated.map(rp => {
+              const rpColor = VENDOR_COLORS[rp.vendorGroup] || '#B2BEC3';
+              return (
+                <a
+                  href={`/product/${rp.id}`}
+                  class="bg-[#16161F] rounded-xl border border-[#2A2A3A] p-5 transition-all duration-300 hover:bg-[#1E1E2A] hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20 group"
+                >
+                  <div class="h-1 w-full rounded-full mb-3" style={`background: ${rpColor}`}></div>
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="text-2xl">{rp.logoUrl}</span>
+                    <div class="min-w-0">
+                      <h3 class="text-base font-bold text-[#E8E8ED] group-hover:text-[#FF6B35] transition-colors truncate">{rp.name}</h3>
+                      <p class="text-xs text-[#5A5A6E] truncate">{rp.slogan}</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 text-xs text-[#5A5A6E]">
+                    <span class="w-2 h-2 rounded-full" style={`background: ${rpColor}`}></span>
+                    <span>{rp.vendor}</span>
+                    <span class="ml-auto text-[#FF6B35] font-medium">{rp.price}</span>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+    </div>
+  </div>
+</BaseLayout>
+
+<!-- JSON-LD Breadcrumb -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://clawnav.com" },
+    { "@type": "ListItem", "position": 2, "name": product.name, "item": `https://clawnav.com/product/${product.id}` }
+  ]
+})} />
+
+<!-- JSON-LD SoftwareApplication -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": product.name,
+  "description": product.slogan,
+  "url": `https://clawnav.com/product/${product.id}`,
+  "applicationCategory": "AI Agent",
+  "operatingSystem": product.platformLabel,
+  "author": {
+    "@type": "Organization",
+    "name": product.vendor
+  },
+  "offers": product.priceCategory === 'free' || product.priceCategory === 'open-source'
+    ? { "@type": "Offer", "price": "0", "priceCurrency": "CNY" }
+    : undefined,
+  ...(product.github ? { "codeRepository": product.github } : {}),
+  "datePublished": product.releaseDate,
+  "dateModified": product.updatedAt
+})} />

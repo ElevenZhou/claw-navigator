@@ -1,0 +1,101 @@
+---
+import TagBadge from './TagBadge.astro';
+import DifficultyStars from './DifficultyStars.astro';
+import { VENDOR_COLORS } from '../data/constants';
+import type { Product } from '../types/product';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+const vendorColor = VENDOR_COLORS[product.vendorGroup] || '#B2BEC3';
+const isActive = (tag: string) => ['free', 'open-source'].includes(tag);
+const tagLabel = (tag: string) => {
+  const map: Record<string, string> = {
+    'desktop': '桌面端', 'web': '网页端', 'mobile': '手机端', 'multi': '多端',
+    'free': '免费', 'open-source': '开源', 'local-deploy': '本地部署',
+    'cloud-deploy': '云端部署', 'enterprise': '企业级', 'personal': '个人版',
+  };
+  return map[tag] || tag;
+};
+---
+
+<div
+  class="product-card bg-[#16161F] rounded-xl border border-[#2A2A3A] p-5 transition-all duration-300 cursor-pointer hover:bg-[#1E1E2A] hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20 group"
+  data-product-id={product.id}
+>
+  <!-- Vendor color bar -->
+  <div class="h-1 w-full rounded-full mb-4" style={`background: ${vendorColor}`}></div>
+
+  <!-- Header -->
+  <div class="flex items-start gap-3 mb-3">
+    <span class="text-3xl flex-shrink-0">{product.logoUrl}</span>
+    <div class="min-w-0">
+      <h3 class="text-lg font-bold text-[#E8E8ED] group-hover:text-[#FF6B35] transition-colors truncate">
+        {product.name}
+      </h3>
+      <p class="text-sm text-[#9898A6] truncate">{product.slogan}</p>
+    </div>
+  </div>
+
+  <!-- Vendor -->
+  <div class="flex items-center gap-1.5 mb-3">
+    <span class="w-2 h-2 rounded-full flex-shrink-0" style={`background: ${vendorColor}`}></span>
+    <span class="text-xs text-[#5A5A6E]">{product.vendor}</span>
+    {product.status === 'beta' && (
+      <span class="ml-auto text-xs px-2 py-0.5 rounded-full bg-yellow-500/15 text-yellow-400 font-medium">Beta</span>
+    )}
+  </div>
+
+  <!-- Tags -->
+  <div class="flex flex-wrap gap-1.5 mb-3">
+    {product.tagCategories.slice(0, 4).map(tag => (
+      <TagBadge label={tagLabel(tag)} active={isActive(tag)} />
+    ))}
+  </div>
+
+  <!-- Difficulty -->
+  <div class="flex items-center gap-2 mb-3">
+    <span class="text-xs text-[#5A5A6E]">难度</span>
+    <DifficultyStars difficulty={product.difficulty} />
+  </div>
+
+  <!-- Price & Stars -->
+  <div class="flex items-center justify-between mb-4">
+    <span class:list={[
+      'text-sm font-medium',
+      product.priceCategory === 'free' || product.priceCategory === 'open-source'
+        ? 'text-[#4ECDC4]'
+        : 'text-[#FF6B35]'
+    ]}>
+      {product.price}
+    </span>
+    {product.github && (
+      <span class="text-xs text-[#5A5A6E]">⭐ GitHub</span>
+    )}
+  </div>
+
+  <!-- Actions -->
+  <div class="flex items-center justify-between pt-3 border-t border-[#2A2A3A]">
+    <button
+      class="compare-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#2A2A3A] text-sm text-[#9898A6] hover:border-[#FF6B35] hover:text-[#FF6B35] hover:bg-[#FF6B35]/10 transition-colors"
+      data-product-id={product.id}
+    >
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      <span class="btn-text">加入对比</span>
+    </button>
+    <a
+      href={`/product/${product.id}`}
+      class="text-sm text-[#FF6B35] hover:underline flex items-center gap-1"
+    >
+      查看详情
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-[#2A2A3A] bg-[#0A0A0F]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Brand -->
+      <div class="space-y-3">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🦞</span>
+          <span class="text-lg font-bold text-[#E8E8ED]">Claw Navigator</span>
+        </div>
+        <p class="text-sm text-[#9898A6] leading-relaxed">
+          国内首个 Claw/龙虾 AI Agent 生态导航与对比平台。<br/>
+          一站式发现、对比、选择最适合你的智能体。
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-sm font-semibold text-[#E8E8ED] mb-3">快速导航</h3>
+        <ul class="space-y-2">
+          <li><a href="/" class="text-sm text-[#9898A6] hover:text-[#FF6B35] transition-colors">首页</a></li>
+          <li><a href="/compare" class="text-sm text-[#9898A6] hover:text-[#FF6B35] transition-colors">产品对比</a></li>
+          <li><a href="/ecosystem" class="text-sm text-[#9898A6] hover:text-[#FF6B35] transition-colors">生态全景图</a></li>
+          <li><a href="/news" class="text-sm text-[#9898A6] hover:text-[#FF6B35] transition-colors">行业动态</a></li>
+        </ul>
+      </div>
+
+      <!-- Info -->
+      <div>
+        <h3 class="text-sm font-semibold text-[#E8E8ED] mb-3">关于</h3>
+        <ul class="space-y-2">
+          <li><a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener noreferrer" class="text-sm text-[#9898A6] hover:text-[#FF6B35] transition-colors">OpenClaw GitHub</a></li>
+          <li class="text-sm text-[#9898A6]">产品数据仅供参考</li>
+          <li class="text-sm text-[#9898A6]">欢迎提交新产品信息</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-8 pt-6 border-t border-[#2A2A3A] flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p class="text-xs text-[#5A5A6E]">© {currentYear} Claw Navigator. 产品信息来源于公开资料，仅供参考。</p>
+      <p class="text-xs text-[#5A5A6E]">关注 Claw 生态动态，找到最适合你的 🦞</p>
+    </div>
+  </div>
+</footer>

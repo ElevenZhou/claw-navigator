@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import CompareClient from '../components/CompareClient';
+import productsData from '../data/products.json';
+
+// Pass minimal data needed for compare
+const compareProducts = productsData.map(p => ({
+  id: p.id,
+  name: p.name,
+  slogan: p.slogan,
+  vendor: p.vendor,
+  vendorGroup: p.vendorGroup,
+  platformLabel: p.platformLabel,
+  deployType: p.deployType,
+  price: p.price,
+  priceCategory: p.priceCategory,
+  openSource: p.openSource,
+  privacy: p.privacy,
+  aiModel: p.aiModel,
+  messagePlatforms: p.messagePlatforms,
+  messagePlatformCount: p.messagePlatformCount,
+  skills: p.skills,
+  difficulty: p.difficulty,
+  features: p.features,
+  pros: p.pros,
+  cons: p.cons,
+  audience: p.audience,
+  tagCategories: p.tagCategories,
+  status: p.status,
+  logoUrl: p.logoUrl,
+  website: p.website,
+  github: p.github,
+}));
+---
+
+<BaseLayout title="产品对比" description="对比不同 Claw AI Agent 产品，找到最适合你的智能体">
+  <div class="pt-24 pb-16 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto">
+
+      <Breadcrumb items={[
+        { label: '首页', href: '/' },
+        { label: '产品对比' }
+      ]} />
+
+      <div class="mb-8">
+        <h1 class="text-2xl sm:text-3xl font-bold text-[#E8E8ED] mb-2">🦞 产品对比</h1>
+        <p class="text-[#9898A6]">选择 2-4 款产品进行多维度对比，找到最适合你的智能体</p>
+      </div>
+
+      <CompareClient client:load products={compareProducts} />
+    </div>
+  </div>
+</BaseLayout>
